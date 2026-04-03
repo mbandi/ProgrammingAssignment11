@@ -107,7 +107,7 @@ function(input, output, session) {
         } else if(markerId == "baluard2") {
             output$description <- renderText({"There are not a lot of places to see the rooftop os the old town buildings, this is one of them."})
         } else if(markerId == "bellver") {
-            output$description <- renderText({"This is a not-very-practical multi-purpose small castle with some panoramic views of the city."})
+            output$description <- renderText({"BBellver Castle. This is a not-very-practical multi-purpose small castle with some panoramic views of the city."})
         } else if(markerId == "colArq") {
             output$description <- renderText({"This belongs to the Architecture college, sometimes they have some expositions that you can see."})
         } else if(markerId == "museoMall") {

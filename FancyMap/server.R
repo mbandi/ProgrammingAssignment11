@@ -1,29 +1,34 @@
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
+# 
+# Since we already know how to put information inside a map from the slides, 
+# the idea of this map was to do some things that are not covered in them.
+# One is to conditionally paint and remove things on the map, and the other 
+# is to detect user interactions with the map.
+# 
+# There are several ways to do it, but it turns out that leaflet has some
+# convenient ways to achieve this out of the box.
+# 
+# The documentation for this was taken from this sources:
+# 
+## https://rstudio.github.io/leaflet/articles/shiny.html
+## https://rstudio.github.io/leaflet/articles/showhide.html
+# 
+# 
+# If no one likes this map I'll do another one with more math... but with this 
+# one you get to know some places to check out if you come to visit
+# 
+
 
 library(shiny)
 library(leaflet)
-
-
-## https://rstudio.github.io/leaflet/articles/shiny.html
-## https://rstudio.github.io/leaflet/articles/showhide.html
-
-## https://www.latlong.net/
 
 
 function(input, output, session) {
 
     output$map <- renderLeaflet({
         my_map <- leaflet() %>% 
-            addTiles(group = "Default") %>%
-            addTiles(providers$Esri.WorldImagery, group = "Satellite")%>%
+            addTiles() %>%
             
+            # Group parameter is used to control visibility, layerId is to know what marker the user clicked
             addMarkers(lat = 39.565480, lng = 2.653512, popup = "Bellaombra", group = "Landmarks", layerId = "bellaombra") %>%
             addMarkers(lat = 39.570967, lng = 2.640377, popup = "Big park", group = "Landmarks", layerId = "saFeixina") %>%
             addMarkers(lat = 39.567634, lng = 2.647568, popup = "Cathedral", group = "Landmarks", layerId = "laSeu") %>%
@@ -53,17 +58,20 @@ function(input, output, session) {
             addMarkers(lat = 39.570140, lng = 2.641042, popup = "Modern art", group = "To visit", layerId = "musBaluard") %>%
             addMarkers(lat = 39.570744, lng = 2.648075, popup = "Cool mind teasers", group = "To visit", layerId = "puzzle2") %>%
             
+            # This adds an overlayed control on the map to show/hide groups.
             addLayersControl(
-                baseGroups = c("Default", "Satellite"),
                 overlayGroups = c("Landmarks", "Food/drink", "Nice Views", "To visit"),
                 options = layersControlOptions(collapsed = FALSE))
         
         my_map
     })
     
+    # Here we observe the marker click event
     observeEvent(input$map_marker_click, {
-        print(input$map_marker_click)
+        
+        # Only the ID is required for our work
         markerId <- input$map_marker_click$id
+        
         if(markerId == "bellaombra") {
             output$description <- renderText({"We used to have beautiful trees here, but the city council chop them down :("})
         } else if(markerId == "saFeixina") {
@@ -89,7 +97,7 @@ function(input, output, session) {
         } else if(markerId == "maua") {
             output$description <- renderText({"This guys craft their own chocolate, with products from specific places. Like a specialty coffe shop, but for chocolate."})
         } else if(markerId == "baluardPrincep") {
-            output$description <- renderText({"This was part of the old defensive wall of the city, and is 'restored'. There are some nice views from up there."})
+            output$description <- renderText({"This was part of the old defensive wall of the city, and is 'newly restored'. There are some nice views from up there."})
         } else if(markerId == "rambla") {
             output$description <- renderText({"There are some nice views from the top of the stairs. Specially around christmass."})
         } else if(markerId == "dMurada") {

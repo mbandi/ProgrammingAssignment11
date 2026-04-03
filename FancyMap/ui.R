@@ -1,17 +1,26 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
+# 
+# Since we already know how to put information inside a map from the slides, 
+# the idea of this map was to do some things that are not covered in them.
+# One is to conditionally paint and remove things on the map, and the other 
+# is to detect user interactions with the map.
+# 
+# Since most of this things are handled in the server, the UI is very simple, 
+# with just a panel for the map and a text area to show some info about what
+# the user clicked.
+# 
+# The documentation for this was taken from this sources:
+# 
+## https://rstudio.github.io/leaflet/articles/shiny.html
+## https://rstudio.github.io/leaflet/articles/showhide.html
+# 
+# 
+# If no one likes this map I'll do another one with more math... but with this 
+# one you get to know some places to check out if you come to visit
+# 
+
 
 library(shiny)
 library(leaflet)
-
-
-## https://rstudio.github.io/leaflet/articles/shiny.html
 
 
 fluidPage(

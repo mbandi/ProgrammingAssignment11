@@ -12,6 +12,7 @@
 # 
 ## https://rstudio.github.io/leaflet/articles/shiny.html
 ## https://rstudio.github.io/leaflet/articles/showhide.html
+## https://github.com/RamiKrispin/shinylive-r
 # 
 # 
 # If no one likes this map I'll do another one with more math... but with this 
